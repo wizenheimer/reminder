@@ -14,6 +14,10 @@ struct ReminderDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    private var isFormValid: Bool {
+        !editConfig.title.isEmpty
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -66,8 +70,13 @@ struct ReminderDetailView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
-                       
-                    }
+                        do {
+                            let _ = try ReminderService.updateReminder(reminder: reminder, editConfig: editConfig)
+                        } catch {
+                            print(error)
+                        }
+                        dismiss()
+                    }.disabled(!isFormValid)
                 }
             }
         }

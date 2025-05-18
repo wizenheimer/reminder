@@ -24,8 +24,8 @@ struct ReminderEditConfig {
         title = reminder.title ?? ""
         notes = reminder.notes
         isCompleted = reminder.isCompleted
-        reminderDate = reminder.reminderDate
-        reminderTime = reminder.reminderTime
+        reminderDate = reminder.reminderDate ?? Date()
+        reminderTime = reminder.reminderTime ?? Date()
         hasDate = reminder.reminderDate != nil
         hasTime = reminder.reminderTime != nil
     }
