@@ -1,0 +1,67 @@
+//
+//  ReminderDetailView.swift
+//  Reminders
+//
+//  Created by Nayan on 18/05/25.
+//
+
+import SwiftUI
+
+struct ReminderDetailView: View {
+    
+    @Binding var reminder: Reminder
+    @State var editConfig: ReminderEditConfig = ReminderEditConfig()
+    
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                List {
+                    Section {
+                        TextField("Title", text: $editConfig.title)
+                        TextField("Notes", text: $editConfig.notes ?? "")
+                    }
+                    Section {
+                        Toggle(isOn: $editConfig.hasDate) {
+                            Image(systemName: "calendar")
+                        }
+                        
+                        if editConfig.hasDate {
+                            DatePicker("Select Date", selection: $editConfig.reminderDate ?? Date(), displayedComponents: .date)
+                        }
+                        
+                        Toggle(isOn: $editConfig.hasTime) {
+                            Image(systemName: "clock")
+                        }
+                        
+                        if editConfig.hasTime {
+                            DatePicker("Select Time", selection: $editConfig.reminderTime ?? Date(), displayedComponents: .hourAndMinute)
+                        }
+                    }
+                }
+            }.onAppear {
+                editConfig = ReminderEditConfig(reminder: reminder)
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Details")
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") {
+                       
+                    }
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    ReminderDetailView(reminder: .constant(PreviewData.reminder))
+}
