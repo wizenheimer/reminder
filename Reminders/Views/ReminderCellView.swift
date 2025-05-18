@@ -7,11 +7,21 @@
 
 import SwiftUI
 
+enum ReminderCellEvents {
+    case onInfo
+    case onCheckedChanged(Reminder, Bool)
+    case onSelect(Reminder)
+    
+}
+
 struct ReminderCellView: View {
     
     @State private var checked: Bool = false
     
     let reminder: Reminder
+    let delay: Delay = Delay()
+    let onEvent: (ReminderCellEvents) -> Void
+    
     
     private func formatDate(_ date: Date) -> String {
         if date.isToday {
@@ -30,6 +40,14 @@ struct ReminderCellView: View {
                 .opacity(0.4)
                 .onTapGesture {
                     checked.toggle()
+                    
+                    // Cancel the old task
+                    delay.cancel()
+                    
+                    // call on checked inside the delay
+                    delay.performWork {
+                        onEvent(.onCheckedChanged(reminder, checked))
+                    }
                 }
             
             VStack(alignment: .leading) {
@@ -53,11 +71,20 @@ struct ReminderCellView: View {
                     .opacity(0.4)
             }
             
-        }
+            Spacer()
+            
+            Image(systemName: "info.circle.fill")
+                .onTapGesture {
+                    onEvent(.onInfo)
+                }
+        }.contentShape(Rectangle())
+            .onTapGesture {
+                onEvent(.onSelect(reminder))
+            }
     }
 }
 
 
 #Preview {
-    ReminderCellView(reminder: PreviewData.reminder)
+    ReminderCellView(reminder: PreviewData.reminder, onEvent: {_ in } )
 }

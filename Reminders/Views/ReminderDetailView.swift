@@ -38,6 +38,18 @@ struct ReminderDetailView: View {
                         if editConfig.hasTime {
                             DatePicker("Select Time", selection: $editConfig.reminderTime ?? Date(), displayedComponents: .hourAndMinute)
                         }
+                        
+                        Section {
+                            NavigationLink {
+                                SelectListView(selectedList: $reminder.list)
+                            } label: {
+                                HStack {
+                                    Text("List")
+                                    Spacer()
+                                    Text(reminder.list!.name)
+                                }
+                            }
+                        }
                     }
                 }
             }.onAppear {
@@ -64,4 +76,5 @@ struct ReminderDetailView: View {
 
 #Preview {
     ReminderDetailView(reminder: .constant(PreviewData.reminder))
+        .environment(\.managedObjectContext, CoreDataProvider.shared.persistentContainer.viewContext)
 }
