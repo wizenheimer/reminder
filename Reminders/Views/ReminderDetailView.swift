@@ -55,7 +55,17 @@ struct ReminderDetailView: View {
                             }
                         }
                     }
-                }
+                    .onChange(of: editConfig.hasDate) { _, _ in
+                        if editConfig.hasDate {
+                            editConfig.reminderDate = Date()
+                        }
+                    }
+                    .onChange(of: editConfig.hasTime) { _, _ in
+                        if editConfig.hasTime {
+                            editConfig.reminderTime = Date()
+                        }
+                    }
+                }.listStyle(.insetGrouped)
             }.onAppear {
                 editConfig = ReminderEditConfig(reminder: reminder)
             }

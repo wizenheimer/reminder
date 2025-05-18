@@ -51,4 +51,16 @@ class ReminderService {
         try save()
         return true
     }
+    
+    static func deleteReminder(reminder: Reminder) throws {
+        viewContext.delete(reminder)
+        try save()
+    }
+    
+    static func getRemindersBySearchTerm(_ searchTerm: String) -> NSFetchRequest<Reminder> {
+        let request = Reminder.fetchRequest()
+        request.sortDescriptors = []
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchTerm)
+        return request
+    }
 }
