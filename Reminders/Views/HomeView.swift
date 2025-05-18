@@ -8,12 +8,40 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @State private var isPresented: Bool = false
+    
+    @FetchRequest(sortDescriptors: [])
+    private var myListResults: FetchedResults<MyList>
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                
+                MyListView(myLists: myListResults)
+                
+//                Spacer()
+                
+                Button {
+                    isPresented = true
+                } label: {
+                    Text("Add List")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .font(.headline)
+                }.padding()
+            }.sheet(isPresented: $isPresented) {
+                NavigationView {
+                    AddNewListView { name, color in
+                        // Save the list into the database
+                        do {
+                            try ReminderService.saveMyList(name, color)
+                        } catch {
+                            print(error)
+                        }
+                        
+                    }
+                }
+            }
         }
         .padding()
     }
@@ -21,4 +49,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environment(\.managedObjectContext, CoreDataProvider.shared.persistentContainer.viewContext)
 }
