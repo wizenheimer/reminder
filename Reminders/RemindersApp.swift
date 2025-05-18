@@ -6,9 +6,20 @@
 //
 
 import SwiftUI
+import UserNotifications
+
 
 @main
 struct RemindersApp: App {
+    
+    init() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in
+            
+        }
+    }
+    
+    
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
