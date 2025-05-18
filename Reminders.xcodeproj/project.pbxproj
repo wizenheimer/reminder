@@ -32,8 +32,8 @@
 		26F7104E2DD9D46A0092E0B2 = {
 			isa = PBXGroup;
 			children = (
-				26F710592DD9D46A0092E0B2 /* Reminders */,
 				26F710582DD9D46A0092E0B2 /* Products */,
+				26F710592DD9D46A0092E0B2 /* Reminders */,
 			);
 			sourceTree = "<group>";
 		};
