@@ -42,26 +42,27 @@ struct HomeView: View {
                         HStack {
                             NavigationLink {
                                 ReminderListView(reminders: todayResults)
-                            } label : {
-                                ReminderStatsView(icon: "calendar", title: "Today", count: reminderStatsValues.todayCount)
+                            } label: {
+                                ReminderStatsView(icon: "sun.max.fill", title: "Today", count: reminderStatsValues.todayCount, iconColor: .blue)
                             }
+
                             NavigationLink {
                                 ReminderListView(reminders: allResults)
-                            } label : {
-                                ReminderStatsView(icon: "tray.circle.fill", title: "All", count: reminderStatsValues.allCount, iconColor: .orange)
+                            } label: {
+                                ReminderStatsView(icon: "list.bullet.circle.fill", title: "All", count: reminderStatsValues.allCount, iconColor: .purple)
                             }
                         }
                         HStack {
                             NavigationLink {
-                                ReminderListView(reminders: scheduledResults)
-                            } label : {
-                                ReminderStatsView(icon: "calendar.circle.fill", title: "Scheduled", count: reminderStatsValues.scheduledCount, iconColor: .secondary)
-                            }
-                            
+                                    ReminderListView(reminders: scheduledResults)
+                                } label: {
+                                    ReminderStatsView(icon: "clock.fill", title: "Scheduled", count: reminderStatsValues.scheduledCount, iconColor: .orange)
+                                }
+                                
                             NavigationLink {
                                 ReminderListView(reminders: completedResults)
-                            } label : {
-                                ReminderStatsView(icon: "checkmark.circle.fill", title: "Completed", count: reminderStatsValues.completedCount, iconColor: .primary)
+                            } label: {
+                                ReminderStatsView(icon: "checkmark.circle.fill", title: "Completed", count: reminderStatsValues.completedCount, iconColor: .green)
                             }
                         }
                     }

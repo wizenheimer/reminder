@@ -56,7 +56,7 @@ struct ReminderStatsBuilder {
     
     private func calculateAllCount(reminders: [Reminder]) -> Int {
         return reminders.reduce(0) { result, reminder in
-            return !reminder.isCompleted ? result + 1 : result
+            return result + 1
         }
     }
     

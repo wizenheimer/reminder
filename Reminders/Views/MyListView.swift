@@ -11,6 +11,8 @@ struct MyListView: View {
     
     let myLists: FetchedResults<MyList>
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         NavigationStack {
             if myLists.isEmpty {
@@ -26,7 +28,7 @@ struct MyListView: View {
                                 .font(.title3)
                             Divider()
                         }
-                    }
+                    }.listRowBackground(colorScheme == .dark ? Color.darkGray : Color.offWhite)
                 }.scrollContentBackground(.hidden)
                     .navigationDestination(for: MyList.self) { myList in
                         MyListDetailView(myList: myList)
